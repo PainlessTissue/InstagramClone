@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Share" android:id="@+id/share"/>
-    <item android:title="Log out" android:id="@+id/logOut"/>
+    <item android:title="@string/share" android:id="@+id/share"/>
+    <item android:title="@string/myFeed" android:id="@+id/myFeed"/>
+    <item android:title="@string/logout" android:id="@+id/logOut"/>
 
 </menu>

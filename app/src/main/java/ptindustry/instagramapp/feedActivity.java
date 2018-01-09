@@ -14,6 +14,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -40,10 +41,9 @@ public class feedActivity extends AppCompatActivity
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection(); //open the connection of the url
                 connection.connect(); //get the url
                 InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input); //create the bitmap being returned from the inputstream
 
-                return myBitmap;
-            }
+                return BitmapFactory.decodeStream(input); //create the bitmap being returned from the inputstream
+        }
 
             catch (Exception e)
             {
@@ -65,7 +65,6 @@ public class feedActivity extends AppCompatActivity
             img.setImageBitmap(bitmap);
 
             linearLayout.addView(img);
-
         }
     }
 
@@ -77,9 +76,20 @@ public class feedActivity extends AppCompatActivity
 
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
 
+        int userCode = getIntent().getIntExtra("User", 100);
+
+        if (userCode == userActivity.CURRENTUSER) //display current users feed
+            displayFeed(ParseUser.getCurrentUser().getUsername());
+
+        else if (userCode == userActivity.OTHERUSER) //display the feed of who you clicked
+            displayFeed(getIntent().getStringExtra("username"));
+    }
+
+
+    void displayFeed(String username)
+    {
         //getStringExtra is necessary because it gets the correct sent in intent
         //this intent is sending over the username clicked on
-        String username = getIntent().getStringExtra("username");
         setTitle(username + "'s feed");
 
         //get the images that users have sent in
@@ -87,21 +97,16 @@ public class feedActivity extends AppCompatActivity
         query.whereEqualTo("username", username); //get this specific users images
         query.setLimit(50); //dont wanna overload the phone with a million pictures
         query.addDescendingOrder("createdAt");
-/*
-        LinearLayout linearLayout = new LinearLayout(this); //make a linear layout on this activity
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)); //set the size
-*/
         query.findInBackground(new FindCallback<ParseObject>()
         {
             @Override
             public void done(List<ParseObject> objects, ParseException e)
             {
                 //make sure there exists anything in their feed
-                if(objects != null && objects.size() > 0 && e == null)
+                if (objects != null && objects.size() > 0 && e == null)
                 {
-                    for(ParseObject pics : objects) //search through 4 of their images and display them in order
+                    for (ParseObject pics : objects) //search through 4 of their images and display them in order
                     {
                         try
                         {
@@ -120,6 +125,5 @@ public class feedActivity extends AppCompatActivity
                     Toast.makeText(feedActivity.this, "Users feed is empty", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

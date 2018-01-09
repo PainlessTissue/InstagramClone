@@ -34,6 +34,9 @@ import java.util.List;
 
 public class userActivity extends AppCompatActivity
 {
+    //for readability purposes
+    static final int OTHERUSER = 1;
+    static final int CURRENTUSER = 0;
 
     static ArrayList<String> arrayList = new ArrayList<>();
 
@@ -73,11 +76,18 @@ public class userActivity extends AppCompatActivity
         }
 
         //log out user and send back to main menu
-        if(item.getItemId() == R.id.logOut)
+        else if(item.getItemId() == R.id.logOut)
         {
             ParseUser.getCurrentUser().logOut();
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+
+        else if(item.getItemId() == R.id.myFeed)
+        {
+            Intent intent = new Intent(getApplicationContext(), feedActivity.class);
+            intent.putExtra("User", CURRENTUSER);
             startActivity(intent);
         }
 
@@ -184,6 +194,7 @@ public class userActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(getApplicationContext(), feedActivity.class);
                 intent.putExtra("username", arrayList.get(i));
+                intent.putExtra("User", OTHERUSER); //to the intent that we are viewing a different user
                 startActivity(intent);
             }
         });

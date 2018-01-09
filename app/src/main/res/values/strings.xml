@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Instagram App</string>
+    <string name="login">Login</string>
+    <string name="orLogin">Or, Login</string>
+    <string name="signUp">Sign Up</string>
+    <string name="orSignUp">Or, Sign Up</string>
+    <string name="share">Share</string>
+    <string name="logout">Log out</string>
+    <string name="myFeed">My Feed</string>
+
 </resources>
