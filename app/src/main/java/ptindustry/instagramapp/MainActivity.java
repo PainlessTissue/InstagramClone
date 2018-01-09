@@ -14,11 +14,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.DeleteCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener
 {
@@ -139,8 +144,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         password.setOnKeyListener(this);
         backgroundLayout.setOnClickListener(this);
         instagramImageview.setOnClickListener(this);
-
-
+/*
+        List<ParseObject> d= new ParseUser<ParseObject>();
+        ParseQuery<ParseObject> obj = new ParseQuery<ParseObject>("User");
+        ParseUser.deleteAllInBackground(ParseUser.getCurrentUser(), new DeleteCallback()
+        {
+            @Override
+            public void done(ParseException e)
+            {
+                if(e == null)
+                    Toast.makeText(MainActivity.this, "Sucess", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+*/
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
     }
 }

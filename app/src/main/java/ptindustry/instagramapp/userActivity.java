@@ -115,7 +115,7 @@ public class userActivity extends AppCompatActivity
                 //this is what turns the image into something that parse can use
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream); //compress it with the new stream
+                bitmap.compress(Bitmap.CompressFormat.PNG, 40, stream); //compress it with the new stream
 
                 byte[] byteArray = stream.toByteArray(); //turn it into the data for parse
                 ParseFile file = new ParseFile("image.png", byteArray); //and add it
@@ -157,7 +157,7 @@ public class userActivity extends AppCompatActivity
 
         //to access user objects, you use ParseUser.getQuery() instead of objects
         ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.whereNotEqualTo("username", ParseUser.getCurrentUser());
+        query.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername());
 
         arrayList.clear(); //makes sure the list doesnt concatinate
 
